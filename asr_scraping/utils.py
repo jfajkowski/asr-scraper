@@ -1,4 +1,5 @@
 from datetime import datetime
+from datetime import timedelta
 from threading import Timer
 
 
@@ -7,9 +8,8 @@ def flatten(nested_list):
 
 
 class Scheduler:
-    def __init__(self, run_time, interval, target):
+    def __init__(self, run_time, target):
         self._run_time = run_time
-        self._interval = interval
         self._target = target
         self._schedule()
 
@@ -22,13 +22,7 @@ class Scheduler:
         self._run_time = value
         self._schedule()
 
-    @property
-    def interval(self):
-        return self._interval
-
-    @interval.setter
-    def interval(self, value):
-        self._run_time = value
+    def run(self):
         self._schedule()
 
     def _schedule(self):
@@ -42,5 +36,12 @@ class Scheduler:
 
     def _run_and_reschedule(self):
         self._target()
-        self._run_time = self._run_time + self._interval
-        self._schedule()
+        self._reschedule()
+
+    def _reschedule(self):
+        if self.run_time.year:
+            self.run_time = self.run_time.replace(self.run_time.year + 1)
+        elif self.run_time.month:
+            self.run_time = self.run_time.replace((self.run_time.month + 1) % 12 + 1)
+        else:
+            self.run_time = self.run_time + timedelta(days=1)

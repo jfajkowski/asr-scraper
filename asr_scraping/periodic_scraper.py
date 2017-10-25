@@ -1,11 +1,12 @@
 from scraper import Scraper
 from threading import Timer
 
+
 class PeriodicScraper(Scraper):
-    def __init__(self, config):
-        super().__init__(config)
-        self._interval = config['interval'] if 'interval' in config else 0
-        self._ignore_failure = config['ignoreFailure'] if 'ignoreFailure' in config else False
+    def __init__(self, url, interval, ignore_failure=False, name='', output_file='', subscrapers=None, x_paths=None):
+        super().__init__(**locals())
+        self._interval = interval
+        self._ignore_failure = ignore_failure
         self._timer = None
 
     @property

@@ -30,11 +30,13 @@ class Scraper:
             self._run_subscraper(response, callback, **subscraper_definition)
         callback(contents)
 
-    def _get(self, url):
+    @staticmethod
+    def _get(url):
         headers = {'User-Agent': Scraper.USER_AGENTS.random}
         return requests.get(url, headers=headers)
 
-    def _parse(self, response, x_paths):
+    @staticmethod
+    def _parse(response, x_paths):
         tree = html.fromstring(response.content)
         contents = []
         for x_path in x_paths:
