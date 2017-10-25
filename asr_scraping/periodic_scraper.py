@@ -13,6 +13,6 @@ class PeriodicScraper(Scraper):
     def timer(self):
         return self._timer
 
-    def run(self, callback):
+    def run(self, callback=None):
         self._timer = Timer(self._interval, function=super().run(callback))
         self._timer.run()

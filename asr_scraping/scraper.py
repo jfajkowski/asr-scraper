@@ -1,7 +1,9 @@
+import logging
+
+import requests
 from fake_useragent import UserAgent
 from lxml import html
-import logging
-import requests
+from lxml.html import HtmlElement
 
 from utils import flatten
 
@@ -21,14 +23,16 @@ class Scraper:
     def subscrapers(self):
         return self._subscrapers_definitions
 
-    def run(self, callback):
+    def run(self, callback=None):
         response = self._get(self._url)
         contents = self._parse(response, self._x_paths)
         if self._output_file:
             self._dump(contents)
         for subscraper_definition in self._subscrapers_definitions:
             self._run_subscraper(response, callback, **subscraper_definition)
-        callback(contents)
+
+        if callback:
+            callback(contents)
 
     @staticmethod
     def _get(url):
@@ -40,7 +44,7 @@ class Scraper:
         tree = html.fromstring(response.content)
         contents = []
         for x_path in x_paths:
-            content = tree.xpath(x_path)
+            content = [c.xpath('string()') if isinstance(c, HtmlElement) else str(c) for c in tree.xpath(x_path)]
             contents.append(content)
         return contents
 

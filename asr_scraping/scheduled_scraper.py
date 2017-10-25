@@ -2,7 +2,7 @@ from scraper import Scraper
 from utils import Scheduler
 
 
-class PeriodicScraper(Scraper):
+class ScheduledScraper(Scraper):
     def __init__(self, url, time, ignore_failure=False, name='', output_file='', subscrapers=None, x_paths=None):
         super().__init__(**locals())
         self._time = time
@@ -13,6 +13,6 @@ class PeriodicScraper(Scraper):
     def scheduler(self):
         return self._scheduler
 
-    def run(self, callback):
+    def run(self, callback=None):
         self._scheduler = Scheduler(self._time, target=super().run(callback))
         self._scheduler.run()
