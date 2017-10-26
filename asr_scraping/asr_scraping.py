@@ -14,12 +14,14 @@ def parse_args():
     parser.add_argument('-s', '--scheduled', dest='scheduled', default=[], nargs='+')
     return parser.parse_args()
 
+
 def run_async(scrapers):
     for path in scrapers:
         with open(path) as f_in:
             config = json.load(f_in)
             scraper = Scraper(**config)
             scraper.run()
+
 
 def run_periodic(scrapers):
     for path in scrapers:
@@ -28,12 +30,14 @@ def run_periodic(scrapers):
             scraper = PeriodicScraper(**config)
             scraper.run()
 
+
 def run_scheduled(scrapers):
     for path in scrapers:
         with open(path) as f_in:
             config = json.load(f_in)
             scraper = ScheduledScraper(**config)
             scraper.run()
+
 
 def main():
     args = parse_args()
@@ -42,8 +46,9 @@ def main():
     run_scheduled(args.scheduled)
 
     while True and (args.periodic or args.scheduled):
-        if input('Type "EXIT" to exit.') == 'EXIT':
+        if input('Type "EXIT" to exit. ') == 'EXIT':
             break
+
 
 if __name__ == '__main__':
     logging.basicConfig(format='[%(asctime)s][%(levelname)s] %(name)s: %(message)s', level=logging.INFO)

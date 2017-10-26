@@ -25,7 +25,7 @@ class ScraperTest(unittest.TestCase):
                 'subscraper_config': {
                     'name': 'testSubscraper',
                     'x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
-            }}]
+                }}]
         }
         mock_scraper = Scraper(**mock_config)
 

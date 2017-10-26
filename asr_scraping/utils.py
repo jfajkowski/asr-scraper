@@ -8,9 +8,9 @@ def flatten(nested_list):
 
 
 class Scheduler:
-    def __init__(self, run_time, target):
+    def __init__(self, run_time, function):
         self._run_time = run_time
-        self._target = target
+        self._function = function
         self._schedule()
 
     @property
@@ -35,7 +35,7 @@ class Scheduler:
         self._timer.run()
 
     def _run_and_reschedule(self):
-        self._target()
+        self._function()
         self._reschedule()
 
     def _reschedule(self):
