@@ -1,0 +1,23 @@
+{
+  "name": "gitarzysta-scraper",
+  "url": "http://www.magazyngitarzysta.pl/muzyka/recenzje.html",
+  "output_file": "res/titles.txt",
+  "contents_x_paths": [
+    "//*[@id=\"left_podstrony\"]/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/h2/a/text()"
+  ],
+  "next_page_x_path": "//*[@id=\"left_podstrony\"]/div[1]/div[2]/span/span[4]/a/@href",
+  "subscrapers": [
+    {
+      "subscraper_urls_x_paths": [
+        "//*[@id=\"left_podstrony\"]/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/h2/a/@href"
+      ],
+      "subscraper_config": {
+        "name": "gitarzysta-subscraper",
+        "output_file": "res/articles.txt",
+        "contents_x_paths": [
+          "//*[@id=\"page\"]/div/div[3]/span[2]/p/text()"
+        ]
+      }
+    }
+  ]
+}

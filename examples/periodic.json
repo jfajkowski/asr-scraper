@@ -3,7 +3,7 @@
   "url": "https://www.wp.pl/",
   "interval": 10,
   "output_file": "res/titles.txt",
-  "x_paths": [
+  "contents_x_paths": [
     "//*[@id=\"text_topnews\"]/li/a/div/text()"
   ],
   "subscrapers": [
@@ -14,7 +14,7 @@
       "subscraper_config": {
         "name": "wp-subscraper",
         "output_file": "res/articles.txt",
-        "x_paths": [
+        "contents_x_paths": [
           ".//*[contains(@class, 'article--title') or contains(@class, 'article--lead') or contains(@class, 'article--text')]"
         ]
       }

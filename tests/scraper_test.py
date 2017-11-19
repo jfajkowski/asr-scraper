@@ -8,7 +8,7 @@ class ScraperTest(unittest.TestCase):
         mock_config = {
             'name': 'testScraper',
             'url': 'https://www.python.org/',
-            'x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
+            'contents_x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
         }
         mock_scraper = Scraper(**mock_config)
 
@@ -19,12 +19,12 @@ class ScraperTest(unittest.TestCase):
         mock_config = {
             'name': 'testScraper',
             'url': 'https://www.python.org/',
-            'x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt'],
+            'contents_x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt'],
             'subscrapers': [{
                 'subscraper_urls_x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/@href'],
                 'subscraper_config': {
                     'name': 'testSubscraper',
-                    'x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
+                    'contents_x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
                 }}]
         }
         mock_scraper = Scraper(**mock_config)
