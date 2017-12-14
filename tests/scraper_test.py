@@ -1,6 +1,6 @@
 import unittest
 
-from scraper import Scraper
+from scraping import ManualScraper
 
 
 class ScraperTest(unittest.TestCase):
@@ -10,7 +10,7 @@ class ScraperTest(unittest.TestCase):
             'url': 'https://www.python.org/',
             'contents_x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
         }
-        mock_scraper = Scraper(**mock_config)
+        mock_scraper = ManualScraper(**mock_config)
 
         expected = [['python™']]
         mock_scraper.run(lambda actual: self.assertEqual(expected, actual))
@@ -27,7 +27,7 @@ class ScraperTest(unittest.TestCase):
                     'contents_x_paths': ['//*[@id="touchnav-wrapper"]/header/div/h1/a/img/@alt']
                 }}]
         }
-        mock_scraper = Scraper(**mock_config)
+        mock_scraper = ManualScraper(**mock_config)
 
         expected = [['python™']]
         mock_scraper.run(lambda actual: self.assertEqual(expected, actual))

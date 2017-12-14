@@ -2,48 +2,32 @@ import argparse
 import json
 import logging
 
-from scheduled_scraper import ScheduledScraper
-from periodic_scraper import PeriodicScraper
-from scraper import Scraper
+from scraping import AutomaticScraper, BasicScraper, PeriodicScraper, ScheduledScraper
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description='')
-    parser.add_argument('-a', '--async', dest='async', default=[], nargs='+')
+    parser.add_argument('-a', '--automatic', dest='automatic', default=[], nargs='+')
+    parser.add_argument('-b', '--basic', dest='basic', default=[], nargs='+')
     parser.add_argument('-p', '--periodic', dest='periodic', default=[], nargs='+')
     parser.add_argument('-s', '--scheduled', dest='scheduled', default=[], nargs='+')
     return parser.parse_args()
 
 
-def run_async(scrapers):
-    for path in scrapers:
+def run_scrapers(config_paths, scraper_type):
+    for path in config_paths:
         with open(path) as f_in:
             config = json.load(f_in)
-            scraper = Scraper(**config)
-            scraper.run()
-
-
-def run_periodic(scrapers):
-    for path in scrapers:
-        with open(path) as f_in:
-            config = json.load(f_in)
-            scraper = PeriodicScraper(**config)
-            scraper.run()
-
-
-def run_scheduled(scrapers):
-    for path in scrapers:
-        with open(path) as f_in:
-            config = json.load(f_in)
-            scraper = ScheduledScraper(**config)
+            scraper = scraper_type(**config)
             scraper.run()
 
 
 def main():
     args = parse_args()
-    run_async(args.async)
-    run_periodic(args.periodic)
-    run_scheduled(args.scheduled)
+    run_scrapers(args.automatic, AutomaticScraper)
+    run_scrapers(args.basic, BasicScraper)
+    run_scrapers(args.periodic, PeriodicScraper)
+    run_scrapers(args.scheduled, ScheduledScraper)
 
     while True and (args.periodic or args.scheduled):
         if input('Type "EXIT" to exit. ') == 'EXIT':

@@ -1,0 +1,15 @@
+{
+  "name": "elka-scraper",
+  "url": "http://www.elka.pw.edu.pl/",
+  "output_file": "elka.txt",
+  "contents_x_paths": [
+    ".//*/a[text()]",
+    ".//*/b[text()]",
+    ".//*/h[text()]",
+    ".//*/h1[text()]",
+    ".//*/h2[text()]",
+    ".//*/h3[text()]",
+    ".//*/span[text()]",
+    ".//*/p[text()]"
+  ]
+}
