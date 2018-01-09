@@ -1,9 +1,10 @@
 import scrapy
+from bs4 import BeautifulSoup
 
 BASE_URL = 'http://elka.mine.nu/'
 FORM_DATA = {
-    'username': '',
-    'password': '',
+    'username': 'FajQa',
+    'password': 'pozdrowOle123',
     'login': 'Zaloguj'
 }
 FORUM_IDS = range(1, 1000)
@@ -44,12 +45,12 @@ class Spider(scrapy.Spider):
                                  meta=response.meta)
 
     def parse_topic(self, response):
-        posts = response.xpath('//span[@class="postbody"]')
-        for post_id, post in enumerate(posts):
+        soup = BeautifulSoup(response.text)
+        for post in soup.findAll('span', attrs={'class': 'postbody'}):
             yield {
                 'forum_id': response.meta.get('forum_id'),
                 'topic_id': response.meta.get('topic_id'),
-                'text': post.xpath('.//text()').extract()
+                'text': post.get_text()
             }
 
         next_page_href = response.xpath('//span[@class="nav"]/a[contains(text(),"Następny")]/@href')
