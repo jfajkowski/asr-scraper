@@ -7,8 +7,6 @@ from time import sleep
 BASE_URL = 'https://www.opensubtitles.org'
 DOWNLOAD_DIR = '/home/jfajkowski/Downloads/corpora/subtitles'
 UBLOCK_FIREFOX_EXTENSION = '/home/jfajkowski/.mozilla/firefox/pcfvdgp3.default/extensions/uBlock0@raymondhill.net.xpi'
-os.environ['MOZ_HEADLESS'] = '1'
-
 
 class Spider(scrapy.Spider):
     name = "www.opensubtitles.org"

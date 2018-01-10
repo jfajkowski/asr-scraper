@@ -11,7 +11,7 @@ class Spider(CrawlSpider):
     allowed_domains = [ADDRESS]
     start_urls = ['http://' + ADDRESS]
     rules = [
-        Rule(LinkExtractor(deny=('eng')), callback='parse_item', follow=True)
+        Rule(LinkExtractor(deny=('eng', 'Przydatne-informacje/Materialy-dla-Mediow', 'content/download')), callback='parse_item', follow=True)
     ]
 
     def __init__(self, *a, **kw):
@@ -19,10 +19,12 @@ class Spider(CrawlSpider):
         self._driver = webdriver.Firefox()
 
     def parse_item(self, response):
-        self._driver.get(response.url)
-        soup = BeautifulSoup(self._driver.page_source)
-        for paragraph in soup.findAll('p'):
-            yield {
-                'url': response.url,
-                'text': paragraph.get_text()
-            }
+        if 'html' in response.text:
+            self._driver.get(response.url)
+            soup = BeautifulSoup(self._driver.page_source)
+            article = soup.find('div', attrs={'class': 'content-view-full'})
+            if article:
+                yield {
+                    'url': response.url,
+                    'text': article.get_text(separator='<SEP>')
+                }
